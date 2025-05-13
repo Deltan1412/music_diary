@@ -27,7 +27,7 @@ def sign_up(request):
             return redirect('home')
     else:
         form = SignUpForm()
-        return render(request, 'sign_up.html', {'form': form})
+    return render(request, 'sign_up.html', {'form': form})
 
 
 @login_required
@@ -76,7 +76,7 @@ def delete_user(request, user_id):
     user_to_delete = get_object_or_404(User, id=user_id)
 
     if request.user == user_to_delete:
-        redirect('user_administration')
+        return redirect('user_administration')
 
     user_to_delete.delete()
     return redirect('user_administration')

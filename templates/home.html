@@ -13,11 +13,11 @@
     </form>
 
     {% if request.user.is_superuser %}
-    <a href="{% url 'user_administration' %}" method="post">
+    <a href="{% url 'user_administration' %}" >
         <button type="submit">Users Manager</button>
     </a>
 
-    <a href="{% url 'entry_manager' %}" method="POST">
+    <a href="{% url 'entry_manager' %}" >
         <button type="submit">Entry manager</button>
     </a>
     {% else %}
