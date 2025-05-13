@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+    <h1>This is the homepage</h1> <br>
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    {% if request.user.is_superuser %}
+    <a href="{% url 'user_administration' %}" method="post">
+        <button type="submit">Users Manager</button>
+    </a>
+
+    <a href="{% url 'entry_manager' %}" method="POST">
+        <button type="submit">Entry manager</button>
+    </a>
+    {% else %}
+    <br>
+    {% endif %}
+    <br>
+    <a href="{% url 'create_entry' %}">
+        <button>Post new entry</button>
+    </a>
+
+    {% for entry in entries %}
+        <h2> {{ entry.title }} </h2>
+        {% if entry.user_created == request.user %}
+            <a href="{% url 'edit_entry' entry.id %}" style="display:inline">
+                <button>Edit this entry</button>
+            </a>
+        {% endif %}
+
+        <p>A song by {{ entry.song_owner }}</p>
+        <p>Posted by {{ entry.user_created }} <span>on day {{ entry.date_created }}</span> </p>
+
+        <p>{{ entry.content }}</p>
+    {% endfor %}
+
+</body>
+</html>

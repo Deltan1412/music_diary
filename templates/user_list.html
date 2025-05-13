@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+</head>
+<body>
+<h1>Users management</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>User name</th>
+        <th>User email</th>
+        <th>Is staff?</th>
+        <th>Is Super User?</th>
+        <th>Action</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.is_staff }}</td>
+        <td>{{ user.is_superuser }}</td>
+        {% if request.user != user %}
+        <td>
+            <form action="{% url 'delete_user' user.id %}" method="post" style="display:inline">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Delete {{ user }}?')">Delete</button>
+            </form>
+        </td>
+        {% else %}
+        <td> (You) </td>
+        {% endif %}
+
+    </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>

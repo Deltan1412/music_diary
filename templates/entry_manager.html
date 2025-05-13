@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Manager</title>
+</head>
+<body>
+    <h1>Entry Lists</h1>
+    <table border="1">Entry Lists
+        <th>ID</th>
+        <th>Owner</th>
+        <th>Title</th>
+        <th>Action</th>
+    {% for entry in entries %}
+        <tr>
+            <td>{{ entry.id }}</td>
+            <td>{{ entry.user_created }}</td>
+            <td>{{ entry.title }}</td>
+            <td>
+                <form action="{% url 'delete_entry' entry.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Delete post {{ entry.title }}')">Delete Post</button>
+                </form>
+
+            </td>
+        </tr>
+    {% endfor %}
+
+    </table>
+</body>
+</html>
