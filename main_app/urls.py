@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from .views import EntryListAPI
 
 
 urlpatterns = [
@@ -16,4 +17,7 @@ urlpatterns = [
     path('entry_manager/', views.entry_manager, name='entry_manager'),
     path('delete_entry/<int:entry_id>/', views.delete_entry, name='delete_entry'),
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
+
+    path('api/songs/', views.song_list_api, name='songs_api'),
+    path('api/entries-cbv/', EntryListAPI.as_view(), name='entries_api_cbv'),
 ]

@@ -5,8 +5,14 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 
 from .forms import SignUpForm, EntryForm
 
-from .models import Entry
+from .models import Entry, Song
 from django.contrib.auth.models import User
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .serializers import EntrySerializer, SongSerializer, UserSerializer
 # Create your views here.
 
 def enter(request):
@@ -93,8 +99,21 @@ def delete_entry(request, entry_id):
     return redirect('entry_manager')
 
 
+@api_view(['GET'])
+def song_list_api(request):
+    song = Song.objects.all()
+    serializer = SongSerializer(song, many=True)
+    return Response(serializer.data)
 
+class EntryListAPI(APIView):
+    def get(self, request):
+        entries = Entry.objects.all()
+        serializer = EntrySerializer(entries, many=True)
+        return Response(serializer.data)
 
-
-
+class UserListAPI(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
